@@ -25,9 +25,21 @@ public struct StringifyMacro: ExpressionMacro {
     }
 }
 
+public struct PropertyAccessorMacro: AccessorMacro {
+    
+    public static func expansion(
+        of node: AttributeSyntax,
+        providingAccessorsOf declaration: some DeclSyntaxProtocol,
+        in context: some MacroExpansionContext
+    ) throws -> [AccessorDeclSyntax] {
+        []
+    }
+}
+
 @main
 struct PropertyAccessorPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         StringifyMacro.self,
+        PropertyAccessorMacro.self
     ]
 }
