@@ -49,11 +49,18 @@ final class PropertyAccessorTests: XCTestCase {
         #if canImport(PropertyAccessorMacros)
         assertMacroExpansion(
             #"""
-            @Accessor(to: \Foo.value)
-            private var value: Int
+            @Accessor(to: \Self.foo.value)
+            private var fooValue: Int
             """#,
             expandedSource: #"""
-            private var value: Int
+            private var fooValue: Int {
+                get {
+                    self [keyPath: \Self.foo.value]
+                }
+                set {
+                    self [keyPath: \Self.foo.value] = newValue
+                }
+            }
             """#,
             macros: testMacros
         )

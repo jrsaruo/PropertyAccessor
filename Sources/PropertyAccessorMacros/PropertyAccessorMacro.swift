@@ -32,7 +32,21 @@ public struct PropertyAccessorMacro: AccessorMacro {
         providingAccessorsOf declaration: some DeclSyntaxProtocol,
         in context: some MacroExpansionContext
     ) throws -> [AccessorDeclSyntax] {
-        []
+        guard let argument = node.arguments?.as(LabeledExprListSyntax.self)?.first else {
+            fatalError("compiler bug: the macro does not have any arguments")
+        }
+        let keyPath = argument.expression
+        let getter = AccessorDeclSyntax(stringLiteral: """
+        get {
+            self[keyPath: \(keyPath)]
+        }
+        """)
+        let setter = AccessorDeclSyntax(stringLiteral: """
+        set {
+            self[keyPath: \(keyPath)] = newValue
+        }
+        """)
+        return [getter, setter]
     }
 }
 
