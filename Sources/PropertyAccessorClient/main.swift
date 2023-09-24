@@ -1,8 +1,22 @@
 import PropertyAccessor
 
-let a = 17
-let b = 25
+struct Foo {
+    var value: Int
+}
 
-let (result, code) = #stringify(a + b)
+struct Bar {
+    
+    private var foo: Foo
+    
+    @Accessor(to: \Self.foo.value)
+    var fooValue: Int
+    
+    init(foo: Foo) {
+        self.foo = foo
+    }
+}
 
-print("The value \(result) was produced by the code \"\(code)\"")
+var bar = Bar(foo: Foo(value: 10))
+print(bar.fooValue)
+bar.fooValue = 50
+print(bar.fooValue)
