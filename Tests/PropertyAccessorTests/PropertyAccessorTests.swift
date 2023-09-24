@@ -49,7 +49,7 @@ final class PropertyAccessorTests: XCTestCase {
         #if canImport(PropertyAccessorMacros)
         assertMacroExpansion(
             #"""
-            @Accessor
+            @Accessor(to: \Foo.value)
             private var value: Int
             """#,
             expandedSource: #"""

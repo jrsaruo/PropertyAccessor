@@ -11,4 +11,6 @@
 public macro stringify<T>(_ value: T) -> (T, String) = #externalMacro(module: "PropertyAccessorMacros", type: "StringifyMacro")
 
 @attached(accessor)
-public macro Accessor() = #externalMacro(module: "PropertyAccessorMacros", type: "PropertyAccessorMacro")
+public macro Accessor<Root, Value>(
+    to keyPath: KeyPath<Root, Value>
+) = #externalMacro(module: "PropertyAccessorMacros", type: "PropertyAccessorMacro")
