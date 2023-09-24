@@ -8,6 +8,7 @@ import PropertyAccessorMacros
 
 let testMacros: [String: Macro.Type] = [
     "stringify": StringifyMacro.self,
+    "Accessor": PropertyAccessorMacro.self
 ]
 #endif
 
@@ -36,6 +37,23 @@ final class PropertyAccessorTests: XCTestCase {
             """#,
             expandedSource: #"""
             ("Hello, \(name)", #""Hello, \(name)""#)
+            """#,
+            macros: testMacros
+        )
+        #else
+        throw XCTSkip("macros are only supported when running tests for the host platform")
+        #endif
+    }
+    
+    func testPropertyAccessorMacro() throws {
+        #if canImport(PropertyAccessorMacros)
+        assertMacroExpansion(
+            #"""
+            @Accessor
+            private var value: Int
+            """#,
+            expandedSource: #"""
+            private var value: Int
             """#,
             macros: testMacros
         )
