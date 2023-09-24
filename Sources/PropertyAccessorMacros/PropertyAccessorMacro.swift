@@ -30,17 +30,18 @@ public struct PropertyAccessorMacro: AccessorMacro {
             fatalError("compiler bug: the macro does not have any arguments")
         }
         let keyPath = argument.expression
-        let getter = AccessorDeclSyntax(stringLiteral: """
-        get {
-            self[keyPath: \(keyPath)]
-        }
-        """)
-        let setter = AccessorDeclSyntax(stringLiteral: """
-        set {
-            self[keyPath: \(keyPath)] = newValue
-        }
-        """)
-        return [getter, setter]
+        return [
+            """
+            get {
+                self[keyPath: \(keyPath)]
+            }
+            """,
+            """
+            set {
+                self[keyPath: \(keyPath)] = newValue
+            }
+            """
+        ]
     }
 }
 
