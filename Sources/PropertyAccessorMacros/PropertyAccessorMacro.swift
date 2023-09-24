@@ -25,6 +25,22 @@ public struct StringifyMacro: ExpressionMacro {
     }
 }
 
+/// Implementation of the `Accessor` macro attached to the property,
+/// which adds the getter and the setter via the specified key path to the property.
+///
+///     @Accessor(to: \Self.foo.value)
+///     var fooValue: Int
+///
+/// will expand to
+///
+///     var fooValue: Int {
+///         get {
+///             self[keyPath: \Self.foo.value]
+///         }
+///         set {
+///             self[keyPath: \Self.foo.value] = newValue
+///         }
+///     }
 public struct PropertyAccessorMacro: AccessorMacro {
     
     public static func expansion(
