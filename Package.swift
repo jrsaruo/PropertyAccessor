@@ -13,10 +13,6 @@ let package = Package(
             name: "PropertyAccessor",
             targets: ["PropertyAccessor"]
         ),
-        .executable(
-            name: "PropertyAccessorClient",
-            targets: ["PropertyAccessorClient"]
-        ),
     ],
     dependencies: [
         // Depend on the Swift 5.9 release of SwiftSyntax
